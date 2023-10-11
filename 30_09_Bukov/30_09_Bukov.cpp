@@ -143,6 +143,7 @@ void Apartment::addResident(const People& people)
 }
 
 
+
 class House
 {
 private:
