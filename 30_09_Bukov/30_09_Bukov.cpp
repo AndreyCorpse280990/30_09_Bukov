@@ -79,7 +79,55 @@ public:
         delete[] residents;
         std::cout << "Деструктор Apartment отработал" << ", по адресу " << this << std::endl;
     }
+    
+
+    // Добавление жильцов
+    void addResident(const People& people)
+    {
+        People* newPeople = new People[numResidents + 1];
+        for (int i = 0; i < numResidents; i++)
+        {
+            newPeople[i] = residents[i];
+        }
+        newPeople[numResidents] = people;
+        delete[] residents;
+        residents = newPeople;
+        numResidents++;
+    }
+
+    // вывести информацию о жильцах
+    void printResidents() const{
+        std::cout << "Квартира " << number << " Жилец:" << std::endl;
+        for (int i = 0; i < numResidents; i++)
+        {
+            residents[i].print();
+        }
+    }
 };
+
+
+class House
+{
+private:
+    Apartment* apartments;
+    unsigned int nunApartments;
+
+public:
+    // конструктор по-умолчанию
+    
+
+    // конструктоh c параметрами
+    House(const House& other) : nunApartments(other.nunApartments)
+    {
+        apartments = new Apartment[other.nunApartments];
+        for (int i = 0; i < nunApartments; i++)
+        {
+            apartments[i] = Apartment(i + 1);
+        }
+        
+
+    }
+}
 
 int main()
 {
