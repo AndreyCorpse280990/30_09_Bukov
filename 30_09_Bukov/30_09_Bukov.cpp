@@ -54,7 +54,7 @@ public:
     // Конструктор по умолчанию
     Apartment() : number(), residents(nullptr), numResidents(0)
     {
- std::cout << "Конструктор Apartment по умолчанию отработал" << ", по адресу " << this << std::endl;
+        std::cout << "Конструктор Apartment по умолчанию отработал" << ", по адресу " << this << std::endl;
     }
 
     //Конструктор с параметрами
@@ -110,26 +110,79 @@ class House
 {
 private:
     Apartment* apartments;
-    unsigned int nunApartments;
+    unsigned int numApartments;
 
 public:
     // конструктор по-умолчанию
+    House() : apartments(nullptr), numApartments(0)
+    {
+        std::cout << "Конструктор House по умолчанию отработал" << ", по адресу " << this << std::endl;
+    }
     
 
     // конструктоh c параметрами
-    House(const House& other) : nunApartments(other.nunApartments)
+    House(int numApartmentsP) : numApartments(numApartmentsP) 
     {
-        apartments = new Apartment[other.nunApartments];
-        for (int i = 0; i < nunApartments; i++)
+        apartments = new Apartment[numApartments];
+        for (int i = 0; i < numApartments; ++i) 
         {
             apartments[i] = Apartment(i + 1);
         }
-        
-
+        std::cout << "Конструктор House c параметрами отработал" << ", по адресу " << this << std::endl;
     }
-}
+
+    // Конструктор копирования
+    House(const House& other) : numApartments(other.numApartments)
+    {
+        apartments = new Apartment[numApartments];
+        for(int i = 0; i < numApartments; i++)
+        {
+            apartments[i] = other.apartments[i];
+        }
+        std::cout << "Конструктор копирования House  отработал" << ", по адресу " << this << std::endl;
+    }
+
+
+    ~House()
+    {
+        delete[] apartments;
+        std::cout << "Деструктор House отработал" << ", по адресу " << this << std::endl;
+    }
+
+
+    // Добавление жильца в квартиру
+    void addResidentsApartments(unsigned int numApartments, const People& people)
+    {
+        if(numApartments >= 1 && numApartments <= numApartments)
+        {
+            apartments[numApartments - 1].addResident(people);
+        }
+    }
+
+    // Вывести информацию о квартирах и их жильцах
+    void displayHouse() const
+    {
+        std::cout << "House: " << std::endl;
+        for(int i = 0; i < numApartments; i++)
+        {
+            apartments[i].printResidents();
+        }
+    }
+};
+
 
 int main()
 {
+    House myhouse(3); // создание дома с 3 квартирами
 
+    // добавыление жильцов в квартиры
+    myhouse.addResidentsApartments(1, People("Иван", 33)); 
+    myhouse.addResidentsApartments(1, People("Екатерина", 25)); 
+    myhouse.addResidentsApartments(2, People("Александр", 45)); 
+    myhouse.addResidentsApartments(3, People("Сергей", 79)); 
+    myhouse.addResidentsApartments(3, People("Эдуард", 82)); 
+
+
+    //вывод информацйии о доме
+    myhouse.displayHouse();
 }
