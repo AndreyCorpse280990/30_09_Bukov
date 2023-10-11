@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <string>
 
 class People
 {
@@ -8,7 +9,7 @@ private:
 
 public:
     // Конструктор по-умолчанию
-    People() : name(0), age(0)
+    People() : name(""), age(0)
     {
         std::cout << "Конструктор People по умолчанию отработал" << ", по адресу " << this << std::endl;
     }
@@ -48,7 +49,7 @@ class Apartment
 private:
     unsigned int number;
     People* residents;
-    unsigned int numResidents;
+    int numResidents;
 
 public:
     // Конструктор по умолчанию
@@ -95,6 +96,7 @@ public:
         numResidents++;
     }
 
+
     // вывести информацию о жильцах
     void printResidents() const{
         std::cout << "Квартира " << number << " Жилец:" << std::endl;
@@ -110,7 +112,7 @@ class House
 {
 private:
     Apartment* apartments;
-    unsigned int numApartments;
+    int numApartments;
 
 public:
     // конструктор по-умолчанию
@@ -151,11 +153,16 @@ public:
 
 
     // Добавление жильца в квартиру
-    void addResidentsApartments(unsigned int numApartments, const People& people)
+    void addResidentsApartments(int numApartments, const People& people)
     {
-        if(numApartments >= 1 && numApartments <= numApartments)
+        if (numApartments >= 1 && numApartments <= numApartments)
+
         {
             apartments[numApartments - 1].addResident(people);
+        }
+        else
+        {
+            std::cout << "Неверный номер квартиры." << std::endl;
         }
     }
 
@@ -173,6 +180,7 @@ public:
 
 int main()
 {
+    setlocale(LC_ALL, "rus");
     House myhouse(3); // создание дома с 3 квартирами
 
     // добавыление жильцов в квартиры
